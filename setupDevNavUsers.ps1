@@ -16,11 +16,14 @@ $users = Get-ADGroupMember -Identity $AdGroup | Sort-Object name
 Write-Host " - Generate NAV User with SUPER permission for each user in AD group $AdGroup"
 foreach($user in $users)
 {
-    if ($user.objectClass -eq "user") {
-        $sid = $user.SID.Value;
+    $sid = $user.SID.Value;
+
+    if (-not (Get-NAVServerUser NAV | Where windowsSecurityID -eq $sid)) {
         Write-Host ("    Adding " + $user.name)
     
         New-NAVServerUser -Sid $sid -ServerInstance NAV -ErrorAction Continue
         New-NAVServerUserPermissionSet -Sid $sid -ServerInstance NAV -PermissionSetId SUPER -ErrorAction Continue
+    } else {
+        Write-Host ("    " + $user.name + " exists")
     }
 }
