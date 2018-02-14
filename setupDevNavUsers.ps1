@@ -2,7 +2,7 @@
 $AdGroup = $env:DevGroup
 
 Write-Host " - Importing ActiveDirectory PowerShell Module"
-#Add-WindowsFeature RSAT-AD-PowerShell
+Add-WindowsFeature RSAT-AD-PowerShell
 Import-Module ActiveDirectory
 
 # Import NAV Module
