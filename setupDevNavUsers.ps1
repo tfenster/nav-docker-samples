@@ -11,13 +11,16 @@ $nstFolder = (Get-Item "C:\Program Files\Microsoft Dynamics NAV\*\Service").Full
 Import-Module (Join-Path $nstFolder 'Microsoft.Dynamics.Nav.Management.dll')
 
 Write-Host " - Gettings users from AD group $AdGroup"
-$users = Get-ADGroupMember -Identity $AdGroup
+$users = Get-ADGroupMember -Identity $AdGroup | Sort-Object name
 
 Write-Host " - Generate NAV User with SUPER permission for each user in AD group $AdGroup"
 foreach($user in $users)
 {
-    $sid = $user.SID.Value;
+    if ($user.objectClass -eq "user") {
+        $sid = $user.SID.Value;
+        Write-Host ("    Adding " + $user.name)
     
-    New-NAVServerUser -Sid $sid -ServerInstance NAV -ErrorAction SilentlyContinue
-    New-NAVServerUserPermissionSet -Sid $sid -ServerInstance NAV -PermissionSetId SUPER -ErrorAction SilentlyContinue
+        New-NAVServerUser -Sid $sid -ServerInstance NAV -ErrorAction Continue
+        New-NAVServerUserPermissionSet -Sid $sid -ServerInstance NAV -PermissionSetId SUPER -ErrorAction Continue
+    }
 }
