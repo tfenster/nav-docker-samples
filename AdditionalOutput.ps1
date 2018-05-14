@@ -1,8 +1,7 @@
 $letsEncryptMail = $env:letsEncryptMail
-#$publicDnsName = "testtfe11.westeurope.azurecontainer.io"
 
-mkdir c:\inetpub\wwwroot\eighty
-new-website -name eighty -port 80 -physicalpath c:\inetpub\wwwroot\eighty
+mkdir c:\inetpub\wwwroot\eighty | Out-Null
+new-website -name eighty -port 80 -physicalpath c:\inetpub\wwwroot\eighty 
 
 Write-Host "Install modules and dependencies for LetsEncrypt"
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
@@ -28,7 +27,7 @@ Submit-ACMECertificate cert1
 sleep -s 60
 
 Update-ACMECertificate cert1
-mkdir c:\cert
+mkdir c:\cert | Out-Null
 Get-ACMECertificate cert1 -ExportPkcs12 "c:\cert\cert1.pfx"
 
 Write-Host "Import certificate"
