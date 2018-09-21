@@ -5,8 +5,50 @@ new-website -name eighty -port 80 -physicalpath c:\inetpub\wwwroot\eighty
 
 Write-Host "Install modules and dependencies for LetsEncrypt"
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Install-Module -Name ACMESharp -Force
-Install-Module -Name ACMESharp.Providers.IIS -Force
+Try
+  {Install-Module -Name ACMESharp -Force -ErrorAction Stop}
+Catch
+  {
+    Write-Host "Installing ACMESharp failed once, will retry"
+    Start-Sleep -s 60
+    Try
+      {Install-Module -Name ACMESharp -Force -ErrorAction Stop}
+    Catch
+      {
+        Write-Host "Installing ACMESharp failed twice, will retry"
+        Start-Sleep -s 60
+        Try
+          {Install-Module -Name ACMESharp -Force -ErrorAction Stop}
+        Catch
+          {
+            Write-Host "Installing ACMESharp failed three times, won't retry"
+            exit 1
+          }
+      }
+  }
+
+Try
+  {Install-Module -Name ACMESharp.Providers.IIS -Force -ErrorAction Stop}
+Catch
+  {
+    Write-Host "Installing ACMESharp.Providers.IIS failed once, will retry"
+    Start-Sleep -s 60
+    Try
+      {Install-Module -Name ACMESharp.Providers.IIS -Force -ErrorAction Stop}
+    Catch
+      {
+        Write-Host "Installing ACMESharp.Providers.IIS failed twice, will retry"
+        Start-Sleep -s 60
+        Try
+          {Install-Module -Name ACMESharp.Providers.IIS -Force -ErrorAction Stop}
+        Catch
+          {
+            Write-Host "Installing ACMESharp.Providers.IIS failed three times, won't retry"
+            exit 1
+          }
+      }
+  }
+
 Import-Module ACMESharp
 Enable-ACMEExtensionModule -ModuleName ACMESharp.Providers.IIS
 
