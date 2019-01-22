@@ -11,7 +11,7 @@ services:
     container_name: navandsql
     hostname: navandsql
     volumes:
-      - source: 'C:\data\databases\'
+      - source: 'C:\data\'
         target: 'C:\databases_vol\'
         type: bind
     environment: 
