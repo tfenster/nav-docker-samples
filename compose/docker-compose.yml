@@ -14,7 +14,7 @@ services:
       ACCEPT_EULA: Y
       sa_password: Super5ecret!
     volumes:
-      - source: 'C:\data\CRONUS\'
+      - source: 'C:\data\database\CRONUS\'
         target: 'C:\databases_vol\'
         type: bind
 
@@ -31,7 +31,4 @@ services:
       - databaseServer=sql
       - databaseInstance=SQLEXPRESS
       - databaseName=cronus
-    volumes:
-      - source: 'C:\data\'
-        target: 'C:\run\my\'
-        type: bind
+      - folders=c:\run\my=https://github.com/tfenster/nav-docker-samples/archive/multi-instance-with-compose.zip\nav-docker-samples-multi-instance-with-compose
