@@ -1,0 +1,36 @@
+version: '3.3'
+
+networks:
+  default:
+    external:
+      name: nat
+
+services:
+
+  sql:
+    image: microsoft/mssql-server-windows-express
+    environment:
+      attach_dbs: "[{'dbName':'cronus','dbFiles':['C:\\\\databases_vol\\\\Demo Database NAV (13-0)_Data.mdf','C:\\\\databases_vol\\\\Demo Database NAV (13-0)_Log.ldf']}]"
+      ACCEPT_EULA: Y
+      sa_password: SuperSA5ecret!
+    volumes:
+      - source: 'C:\data\database\CRONUS\'
+        target: 'C:\databases_vol\'
+        type: bind
+
+  nav:
+    image: mcr.microsoft.com/businesscentral/onprem:cu3-w1
+    environment: 
+      - accept_eula=y
+      - usessl=n
+      - encryptionPassword=SuperEnc5ecret!
+      - databaseUserName=sa
+      - databasePassword=SuperSA5ecret!
+      - databaseServer=sql
+      - databaseInstance=SQLEXPRESS
+      - databaseName=cronus
+      - folders=c:\run\my=https://github.com/tfenster/nav-docker-samples/archive/multi-instance-with-compose.zip\nav-docker-samples-multi-instance-with-compose
+    volumes:
+      - source: 'C:\data\'
+        target: 'C:\key\'
+        type: bind
