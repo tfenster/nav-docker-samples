@@ -14,7 +14,7 @@ services:
       ACCEPT_EULA: Y
       sa_password: Super5ecret!
     volumes:
-      - source: 'C:\data\databases\CRONUS\'
+      - source: 'C:\data\CRONUS\'
         target: 'C:\databases_vol\'
         type: bind
 
@@ -32,6 +32,6 @@ services:
       - databaseInstance=SQLEXPRESS
       - databaseName=cronus
     volumes:
-      - source: 'C:\data\my\'
+      - source: 'C:\data\'
         target: 'C:\run\my\'
         type: bind
