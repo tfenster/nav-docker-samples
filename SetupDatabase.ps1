@@ -35,5 +35,8 @@ if ($restartingInstance) {
     } else {
         Write-Host "Found an encryption key"
         Copy-Item $MyEncryptionKeyFile $myPath
+        
+        # invoke default
+        . (Join-Path $runPath $MyInvocation.MyCommand.Name)
     }
 }
