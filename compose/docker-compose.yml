@@ -1,0 +1,37 @@
+version: '3.3'
+
+networks:
+  default:
+    external:
+      name: nat
+
+services:
+
+  sql:
+    image: microsoft/mssql-server-windows-express
+    environment:
+      attach_dbs: "[{'dbName':'cronus','dbFiles':['C:\\\\databases_vol\\\\Demo Database NAV (13-0)_Data.mdf','C:\\\\databases_vol\\\\Demo Database NAV (13-0)_Log.ldf']}]"
+      ACCEPT_EULA: Y
+      sa_password: Super5ecret!
+    volumes:
+      - source: 'C:\data\databases\CRONUS\'
+        target: 'C:\databases_vol\'
+        type: bind
+
+  nav:
+    image: mcr.microsoft.com/businesscentral/onprem:cu3-w1
+    environment: 
+      - accept_eula=y
+      - usessl=n
+      - username=admin
+      - password=Super5ecret!
+      - encryptionPassword=Super5ecret!
+      - databaseUserName=sa
+      - databasePassword=Super5ecret!
+      - databaseServer=sql
+      - databaseInstance=SQLEXPRESS
+      - databaseName=cronus
+    volumes:
+      - source: 'C:\data\my\'
+        target: 'C:\run\my\'
+        type: bind
