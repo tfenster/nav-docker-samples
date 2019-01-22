@@ -18,7 +18,7 @@ if ($restartingInstance) {
             # invoke default
             . (Join-Path $runPath $MyInvocation.MyCommand.Name)
 
-            Copy-Item $MyEncryptionKeyFile $myPath
+            Copy-Item (Join-Path $myPath 'DynamicsNAV.key') $myPath
             Remove-Item $LockFile
             Write-Host "Removed the lock"
         } else {
@@ -27,6 +27,7 @@ if ($restartingInstance) {
                 Start-Sleep -Seconds 10
             } while (Test-Path $LockFile -PathType Leaf)
             Write-Host "Unlocked"
+            Copy-Item (Join-Path $myPath 'DynamicsNAV.key') $myPath
             
             # invoke default
             . (Join-Path $runPath $MyInvocation.MyCommand.Name)
