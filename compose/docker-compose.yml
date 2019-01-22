@@ -32,3 +32,7 @@ services:
       - databaseInstance=SQLEXPRESS
       - databaseName=cronus
       - folders=c:\run\my=https://github.com/tfenster/nav-docker-samples/archive/multi-instance-with-compose.zip\nav-docker-samples-multi-instance-with-compose
+    volumes:
+      - source: 'C:\data\'
+        target: 'C:\run\my\'
+        type: bind
