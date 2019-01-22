@@ -2,21 +2,23 @@ if ($restartingInstance) {
     # Nothing to do
 
 } else {
-    $EncryptionKeyFile = Join-Path $myPath 'DynamicsNAV.key'
+    $keyPath = 'c:\key\'
+    $EncryptionKeyFile = Join-Path $keyPath 'DynamicsNAV.key'
     $LockFileName = 'WaitForKey'
-    $LockFile = Join-Path $myPath $LockFileName 
+    $LockFile = Join-Path $keyPath $LockFileName 
     if (!(Test-Path $EncryptionKeyFile -PathType Leaf)) {
         Write-Host "No encryption key"
         $rnd = (Get-Random -Maximum 50) * 100
         Write-Host "Waiting for $rnd milliseconds"
         Start-Sleep -Milliseconds $rnd
         if (!(Test-Path $LockFile -PathType Leaf)) {
-            New-Item -Path $myPath -Name $LockFileName -ItemType 'file' | Out-Null
+            New-Item -Path $keyPath -Name $LockFileName -ItemType 'file' | Out-Null
             Write-Host "Got the lock"
 
             # invoke default
             . (Join-Path $runPath $MyInvocation.MyCommand.Name)
 
+            Copy-Item $EncryptionKeyFile $myPath
             Remove-Item $LockFile
             Write-Host "Removed the lock"
         } else {
@@ -31,5 +33,6 @@ if ($restartingInstance) {
         }
     } else {
         Write-Host "Found an encryption key"
+        Copy-Item $EncryptionKeyFile $myPath
     }
 }
