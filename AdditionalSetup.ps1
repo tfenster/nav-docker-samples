@@ -1,4 +1,3 @@
-﻿. C:\Run\Prompt.ps1
 New-NAVServerUser -WindowsAccount (whoami) NAV
 New-NAVServerUserPermissionSet -WindowsAccount (whoami) -PermissionSetId SUPER NAV
 Write-Host "initialize API Services"
