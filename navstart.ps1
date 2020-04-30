@@ -2,13 +2,13 @@ if (-not (Test-Path Env:AZP_URL)) {
     Write-Error "error: missing AZP_URL environment variable"
     exit 1
 }
-  
+New-Item c:\azp -ItemType directory | Out-Null
 if (-not (Test-Path Env:AZP_TOKEN_FILE)) {
     if (-not (Test-Path Env:AZP_TOKEN)) {
         Write-Error "error: missing AZP_TOKEN environment variable"
         exit 1
     }
-    New-Item c:\azp -ItemType directory | Out-Null
+    
     $Env:AZP_TOKEN_FILE = "\azp\.token"
     $Env:AZP_TOKEN | Out-File -FilePath $Env:AZP_TOKEN_FILE
 }
