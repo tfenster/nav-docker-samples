@@ -15,6 +15,7 @@ if (-not (Test-Path Env:AZP_TOKEN_FILE)) {
   
 Remove-Item Env:AZP_TOKEN
   
+New-Item "c:\agent" -ItemType Directory | Out-Null
 if ($Env:AZP_WORK -and -not (Test-Path Env:AZP_WORK)) {
     New-Item $Env:AZP_WORK -ItemType directory | Out-Null
 }
