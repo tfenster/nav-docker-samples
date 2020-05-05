@@ -1,5 +1,5 @@
-$alops_docker_username = "$env:alops_docker_username"
-$alops_docker_password = "$env:alops_docker_password"
+$alops_docker_username = "${env:alops-docker-username}"
+$alops_docker_password = "${env:alops-docker-password}"
 
 Invoke-Expression "net user /add $alops_docker_username $alops_docker_password"
 Invoke-Expression "net localgroup Administrators $alops_docker_username /add"
