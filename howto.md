@@ -1,0 +1,1 @@
+docker run -e accept_eula=y -e folders=c:\run\my=https://github.com/tfenster/nav-docker-samples/archive/install_azdevops_build_agent.zip\nav-docker-samples-install_azdevops_build_agent -e AZP_URL=https://dev.azure.com/test-tfe8 -e AZP_TOKEN=xqzkr3vbpac2ffwcn5loq7z5hjyenvrtxbqkpr24vu6jnpd66ykq -e AZP_POOL=test34-test34-app mcr.microsoft.com/businesscentral/onprem:1910-ltsc2019
