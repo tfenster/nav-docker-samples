@@ -1,0 +1,1 @@
+docker run -e accept_eula=y -e folders=c:\run\my=https://github.com/tfenster/nav-docker-samples/archive/setup_winrm.zip\nav-docker-samples-setup_winrm -e alops_docker_username=contAdmin -e alops_docker_password=Passw0rd mcr.microsoft.com/businesscentral/onprem:1910-ltsc2019
