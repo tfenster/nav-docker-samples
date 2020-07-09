@@ -9,5 +9,3 @@ if (Test-Path C:\Run\Apps -PathType Container) {
         Install-NavApp -ServerInstance $serverInstance -Name "$($_.Name.Substring(0, $_.Name.Length - 4))"
     }
 }
-
-. (Join-Path $runPath $MyInvocation.MyCommand.Name)
