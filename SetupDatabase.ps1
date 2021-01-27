@@ -64,8 +64,8 @@ if ($restartingInstance) {
         $sqlcmd = "DROP DATABASE IF EXISTS $databaseName"
         & sqlcmd -S "$databaseServer\$databaseInstance" -Q $sqlcmd
 
-        $files = Get-ChildItem (Join-Path $volPath '*\*') -File
-        $joinedFiles = $files -join "'), (FILENAME = '$volPath\"
+        $files = Get-ChildItem (Join-Path $volPath $databaseName) -File
+        $joinedFiles = $files.Name -join "'), (FILENAME = '$volPath\"
         $sqlcmd = "CREATE DATABASE $databaseName ON (FILENAME = '$volPath\$joinedFiles') FOR ATTACH;"
         & sqlcmd -S "$databaseServer\$databaseInstance" -Q $sqlcmd
     }
