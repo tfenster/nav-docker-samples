@@ -1,5 +1,4 @@
 $volPath = "$env:volPath"
-#$myPassword = ([System.Runtime.InteropServices.Marshal]::PtrToStringAuto([System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword)).Replace('"','""').Replace('''',''''''))
 
 if ($restartingInstance) {
 
@@ -18,14 +17,7 @@ if ($restartingInstance) {
 
         $dummy = new-object Microsoft.SqlServer.Management.SMO.Server
 
-        #$sqlcmd = "ALTER LOGIN sa with password='$myPassword',CHECK_POLICY = OFF;ALTER LOGIN sa ENABLE;"
-        #& sqlcmd -S "$databaseServer\$databaseInstance" -Q $sqlcmd
-
         $sqlConn = new-object Microsoft.SqlServer.Management.Common.ServerConnection
-        #$sqlConn.ServerInstance = "localhost"
-        #$sqlConn.LoginSecure = $false
-        #$sqlConn.Login = "sa"
-        #$sqlConn.Password = $myPassword
 
         $toCopy = @()
 
