@@ -2,7 +2,7 @@
 . (Join-Path $runPath $MyInvocation.MyCommand.Name)
 
 # heavily inspired and with usage of https://github.com/waldo1001/BusinessCentralOpenAPIToolkit
-try {
+#try {
     # setup Waldo's Open API toolkit
     mkdir c:\openapi
     cd c:\openapi
@@ -39,7 +39,7 @@ try {
 
     # start express with SwaggerUI frontend 
     start-job -ScriptBlock { cd 'C:\openapi\BusinessCentralOpenAPIToolkit-main'; & 'C:\Program Files\nodejs\node' .\MicrosoftAPIv2.0\MicrosoftAPIv2.0.js }
-}
-catch {
-    "An error occurred that could not be resolved."
-}
+#}
+#catch {
+#    Write-Host "An error occurred that could not be resolved: $($Error[0])"
+#}
