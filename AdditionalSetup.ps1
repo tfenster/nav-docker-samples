@@ -30,7 +30,7 @@ $BaseUrl = 'http://localhost:7048/BC/api/v2.0'
 $Outfile = './MicrosoftAPIv2.0/MicrosoftAPIv2.0.edmx'
 $Metadataurl = $BaseUrl + '/$metadata?$schemaversion=2.0&tenant=default'
 try {
-    Invoke-WebRequest -credentials $cred -Uri $Metadataurl -OutFile $Outfile -UseBasicParsing
+    Invoke-WebRequest -credential $cred -Uri $Metadataurl -OutFile $Outfile -UseBasicParsing
 
     # convert data model
     $folder = './MicrosoftAPIv2.0/'
