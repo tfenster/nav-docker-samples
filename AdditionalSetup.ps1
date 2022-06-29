@@ -25,16 +25,22 @@ refreshenv
 
 # download data model
 $cred = New-Object System.Management.Automation.PSCredential($username, $securepassword)
+Write-Host "user: $username, secpass: $securepassword, cred: $cred"
 $BaseUrl = 'http://localhost:7048/BC/api/v2.0'
 $Outfile = './MicrosoftAPIv2.0/MicrosoftAPIv2.0.edmx'
 $Metadataurl = $BaseUrl + '/$metadata?$schemaversion=2.0&tenant=default'
-Invoke-WebRequest -credentials $cred -Uri $Metadataurl -OutFile $Outfile -UseBasicParsing
+try {
+    Invoke-WebRequest -credentials $cred -Uri $Metadataurl -OutFile $Outfile -UseBasicParsing
 
-# convert data model
-$folder = './MicrosoftAPIv2.0/'
-$Source = Get-ChildItem -Path $folder -Filter '*.edmx'
-$Dest = $folder + [io.path]::GetFileNameWithoutExtension($Source) + '.yaml'
-./Microsoft.OpenApi.OData/OoasUtil.exe -y -i $Source.FullName -o $Dest 
+    # convert data model
+    $folder = './MicrosoftAPIv2.0/'
+    $Source = Get-ChildItem -Path $folder -Filter '*.edmx'
+    $Dest = $folder + [io.path]::GetFileNameWithoutExtension($Source) + '.yaml'
+    ./Microsoft.OpenApi.OData/OoasUtil.exe -y -i $Source.FullName -o $Dest 
 
-# start express with SwaggerUI frontend 
-& 'C:\Program Files\nodejs\node' .\MicrosoftAPIv2.0\MicrosoftAPIv2.0.js
+    # start express with SwaggerUI frontend 
+    & 'C:\Program Files\nodejs\node' .\MicrosoftAPIv2.0\MicrosoftAPIv2.0.js
+}
+catch {
+    "An error occurred that could not be resolved."
+}
