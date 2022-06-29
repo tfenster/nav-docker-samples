@@ -26,7 +26,7 @@ try {
 
     # download data model
     $cred = New-Object System.Management.Automation.PSCredential($username, $securepassword)
-    $BaseUrl = '$protocol$publicDnsName:7048/BC/api/v2.0'
+    $BaseUrl = '$($protocol)localhost:7048/BC/api/v2.0'
     $Outfile = './MicrosoftAPIv2.0/MicrosoftAPIv2.0.edmx'
     $Metadataurl = $BaseUrl + '/$metadata?$schemaversion=2.0&tenant=default'
     Invoke-WebRequest -credential $cred -Uri $Metadataurl -OutFile $Outfile -UseBasicParsing
